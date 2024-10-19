@@ -8,7 +8,7 @@ credentials += Credentials(Path("/tmp") / "does" / "not" / "exists")
 
 TaskKey[Unit]("check") := {
   val updates = dependencyUpdatesData.value
-  if (updates.keySet != Set(ModuleID("org.scala-lang", "scala-library", "2.10.4")))
+  if (updates.keySet != Set(ModuleID("org.scala-lang", "scala-library", "2.10.4").withPlatformOpt(Some("jvm"))))
     sys.error(s"Wrong update keys: ${updates.keySet}")
   val versions = updates(updates.keys.head)
   if (versions.contains(Version("2.10.5")))

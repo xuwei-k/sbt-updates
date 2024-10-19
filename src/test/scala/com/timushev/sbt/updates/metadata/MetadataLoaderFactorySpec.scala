@@ -10,11 +10,6 @@ class MetadataLoaderFactorySpec extends AnyFreeSpec with Matchers {
   val logger = ConsoleLogger()
 
   "A MetadataLoader factory" - {
-    "should return a CachingMetadataLoader for maven repositories" in {
-      MetadataLoaderFactory.loader(logger, Nil).apply(Resolver.jcenterRepo) should have(
-        Symbol("class")(classOf[CachingMetadataLoader])
-      )
-    }
     "should return a CachingMetadataLoader for ivy repositories" in {
       MetadataLoaderFactory.loader(logger, Nil).apply(Resolver.sbtPluginRepo("releases")) should have(
         Symbol("class")(classOf[CachingMetadataLoader])

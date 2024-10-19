@@ -8,7 +8,8 @@ case class SbtAxis(fullVersion: Option[String], idSuffix: String, directorySuffi
     extends VirtualAxis.WeakAxis {
   val scalaVersion: String =
     fullVersion.map(VersionNumber(_)) match {
-      case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.10"
+      case Some(VersionNumber(Seq(1, _*), _, _)) | None => "2.12.20"
+      case Some(VersionNumber(Seq(2, _*), _, _))        => "3.7.2"
       case _                                            => sys.error(s"Unsupported sbt version: $fullVersion")
     }
 }
@@ -45,15 +46,9 @@ object SbtAxis {
           scalaVersion                  := axis.scalaVersion,
           crossPaths                    := true,
           pluginCrossBuild / sbtVersion := axis.fullVersion.getOrElse(sbtVersion.value),
-          publish / skip                := true,
-          compile / skip                := true,
           // Without this the build fails for sbt 0.13,
           // even though it's not clear why the warning is reported
-          conflictWarning := ConflictWarning.disable,
-          scriptedDependencies := Def.taskDyn {
-            if (insideCI.value) Def.task(())
-            else Def.task(()).dependsOn(matrix.finder(buildAxis)(false) / publishLocal)
-          }.value
+          conflictWarning := ConflictWarning.disable
         )
       )
   }

@@ -13,6 +13,7 @@ object UpdatesPlugin extends AutoPlugin {
 
   override val trigger: PluginTrigger = allRequirements
 
+  @transient
   private val dependencyUpdatesCsrConfiguration = taskKey[Option[CoursierConfiguration]]("")
 
   override val projectSettings = Seq(
@@ -34,7 +35,7 @@ object UpdatesPlugin extends AutoPlugin {
         dependencyUpdatesExclusions.value,
         dependencyUpdatesFilter.value,
         dependencyAllowPreRelease.value,
-        (baseDirectory in ThisBuild).value,
+        (ThisBuild / baseDirectory).value,
         streams.value
       )
     },

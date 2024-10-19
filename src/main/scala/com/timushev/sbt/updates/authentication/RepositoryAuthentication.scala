@@ -22,7 +22,7 @@ case class RepositoryAuthentication(
 object RepositoryAuthentication {
 
   def fromCredentials(c: Credentials): Option[RepositoryAuthentication] =
-    allCatch.opt(Credentials.toDirect(c)).map { d =>
+    allCatch.opt(sbt.internal.librarymanagement.ivy.IvyCredentials.toDirect(c)).map { d =>
       RepositoryAuthentication(
         repositoryId = None,
         realm = Some(d.realm),
