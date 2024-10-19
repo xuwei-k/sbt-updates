@@ -19,6 +19,9 @@ sonatypeProfileName := "com.timushev"
 
 ThisBuild / scalacOptions := Seq("-deprecation", "-unchecked", "-feature")
 
+lazy val `sbt-2` = SbtAxis("2.x", "2.0.0-M2")
+lazy val `sbt-2.0.0-M2`  = SbtAxis("2.0.0-M2")
+
 lazy val `sbt-1.x`    = SbtAxis("1.x", "1.1.5")
 lazy val `sbt-latest` = SbtAxis()
 lazy val `sbt-1.0.0`  = SbtAxis("1.0.0")
@@ -28,6 +31,8 @@ lazy val `sbt-updates` = (projectMatrix in file("."))
   .sbtPluginRow(`sbt-1.x`)
   .sbtScriptedRow(`sbt-1.0.0`, `sbt-1.x`)
   .sbtScriptedRow(`sbt-latest`, `sbt-1.x`)
+  .sbtPluginRow(`sbt-2`)
+  .sbtScriptedRow(`sbt-2.0.0-M2`, `sbt-2`)
 
 lazy val root = (project in file("."))
   .withId("sbt-updates")
